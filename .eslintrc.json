@@ -19,6 +19,14 @@
         "react"
     ],
     "rules": {
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "require-jsdoc": "off",
+        "arrow-parens": "off",
+        "new-cap": "off",
+        "indent": [
+            "error",
+            2
+        ],
+        "max-len": "off"
     }
 }
