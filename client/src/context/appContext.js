@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { Redirect } from "react-router";
 
 export const AppContext = createContext(null);
 
@@ -24,6 +25,7 @@ export function AppProvider(props) {
         if (data.ok) {
           setState( prev => ({
             ...prev,
+            isLoading: false,
             movies: data.movies,
           }));
         } else {
@@ -53,9 +55,9 @@ export function AppProvider(props) {
             token: data.token,
             isLoggedIn: true,
             currentUser: data.user.email,
-          }))
-        } else {
-          console.log(data);
+          }));
+          <Redirect to="/home" />
+        } else {          
           setState(prev => ({
             ...prev,
             isLoading: false,
