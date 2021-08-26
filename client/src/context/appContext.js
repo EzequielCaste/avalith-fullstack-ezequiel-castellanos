@@ -1,12 +1,12 @@
 import { createContext, useState } from "react";
-import { Redirect } from "react-router";
 
 export const AppContext = createContext(null);
 
 export function AppProvider(props) {
   const [state, setState] = useState({
     isLoading: false,
-  });
+    isLoggedIn: false,
+  }); 
 
   const actions = {
     getMovies: async () => {
@@ -34,7 +34,7 @@ export function AppProvider(props) {
       })
       .catch( err => console.log('Error conecting to database.'))
     },
-    handleLogin: async (email, password) => {
+    handleLogin: async (email, password) => {     
       setState( prev => ({
         ...prev,
         isLoading: true,
@@ -49,23 +49,23 @@ export function AppProvider(props) {
       .then( resp => resp.json())
       .then(data => {
         if (data.ok) {
+          console.log(data);
           setState(prev => ({
             ...prev,
             isLoading: false,
             token: data.token,
             isLoggedIn: true,
-            currentUser: data.user.email,
-          }));
-          <Redirect to="/home" />
+          }));             
         } else {          
           setState(prev => ({
             ...prev,
             isLoading: false,
             errorMsg: data.errors,
-          }))
+            authMessage: data.msg,
+          }));          
         }
       })
-      .catch( err => console.log('Error conecting to database.'));
+      .catch( err => console.log('Error conecting to database.', err));
     }
   };
 
