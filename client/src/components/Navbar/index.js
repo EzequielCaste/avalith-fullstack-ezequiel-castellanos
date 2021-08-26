@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AppContext } from '../../context/appContext'
 
 const Navbar = () => {
-
-  const handleClick = () => {
-
-  }
+  const {state, actions} = useContext(AppContext);
+  
+  const {isLoggedIn} = state;
 
   return (
     <div className="Navbar">
       <div>Movie Rental</div>
-      <Link to="/auth">Login</Link>
+      {
+        isLoggedIn 
+        ? <button onClick={actions.handleLogout} >Logout</button> 
+        : <Link to="/auth">Login</Link>
+      }
+      
     </div>
   )
 }

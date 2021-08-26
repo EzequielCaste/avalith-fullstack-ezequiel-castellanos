@@ -66,6 +66,12 @@ export function AppProvider(props) {
         }
       })
       .catch( err => console.log('Error conecting to database.', err));
+    },
+    handleLogout: async () => {
+      setState( prev => ({
+        ...prev,
+        isLoggedIn: false,
+      }))
     }
   };
 

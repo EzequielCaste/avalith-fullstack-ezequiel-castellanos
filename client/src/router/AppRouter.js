@@ -11,8 +11,7 @@ const AppRouter = () => {
           <Redirect to="/home" />
         </Route>
         <Route path="/home" component={MovieApp} />
-        <Route path="/auth" component={Login} />
-        
+        <Route path="/auth" component={Login} />              
       </Switch>
     </Router>
   )

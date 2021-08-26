@@ -5,7 +5,7 @@ import { AppContext } from "./context/appContext";
 
 function MovieApp() {
   const {state, actions} = useContext(AppContext);
-  const {movies, isLoading} = state;
+  const {movies, isLoading, isLoggedIn} = state;
 
   useEffect(() => {
     actions.getMovies();    
@@ -19,7 +19,16 @@ function MovieApp() {
         {
           isLoading 
           ? <h1>Loading...</h1>
-          : (movies && movies.map( movie => <p key={movie.title}> {movie.title}</p>))
+          : (
+              movies && movies.map( movie => (
+                <p key={movie.title}>
+                  {movie.title}
+                  {
+                    isLoggedIn && <button>Add to Favorites</button>
+                  }
+                </p>
+              ))
+            )
         }      
       </div>
     </>

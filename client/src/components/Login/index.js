@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import { AppContext } from '../../context/appContext'
 import { useForm } from '../../hooks/useForm';
 
@@ -10,8 +10,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-
-  const history = useHistory();
   
   const {email, password} = formValues;
   
@@ -21,11 +19,9 @@ const Login = () => {
     reset();    
   };
 
-  if (state.isLoggedIn) {
-    // <Redirect to="/home" />
+  if (state.isLoggedIn) {    
     return ( 
-      <Redirect to="/home" />
-      // history.push('/home')
+      <Redirect to="/home" />      
     );
   }
 
