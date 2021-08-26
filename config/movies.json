@@ -1,0 +1,29 @@
+{
+  "movies": [
+    {
+      "title": "Movie Title 1",
+      "image": "https://image.tmdb.org/t/p/w220_and_h330_face//acCS12FVUQ7blkC8qEbuXbsWEs2.jpg",
+      "tags": ["action", "comedy", "adventure"]
+    },
+    {
+      "title": "Movie Title 2",
+      "image": "https://image.tmdb.org/t/p/w220_and_h330_face//acCS12FVUQ7blkC8qEbuXbsWEs2.jpg",
+      "tags": ["drama", "adventure"]
+    },
+    {
+      "title": "Movie Title 3",
+      "image": "https://image.tmdb.org/t/p/w220_and_h330_face//acCS12FVUQ7blkC8qEbuXbsWEs2.jpg",
+      "tags": ["action", "adventure"]
+    },
+    {
+      "title": "Movie Title 4",
+      "image": "https://image.tmdb.org/t/p/w220_and_h330_face//acCS12FVUQ7blkC8qEbuXbsWEs2.jpg",
+      "tags": ["thriller", "action"]
+    },
+    {
+      "title": "Movie Title 5",
+      "image": "https://image.tmdb.org/t/p/w220_and_h330_face//acCS12FVUQ7blkC8qEbuXbsWEs2.jpg",
+      "tags": ["mystery", "action", "drama"]
+    }
+  ]
+}
