@@ -8,5 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/users', require('./routes/users'));
+app.use('/movies', require('./routes/movies'));
 
 app.listen(process.env.PORT, console.log('ok'));

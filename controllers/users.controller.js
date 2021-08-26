@@ -2,13 +2,23 @@ const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
+const {Client} = require('pg');
 const {connect} = require('../config/db');
+require('dotenv').config();
 
 const register = async (req, res) => {
-  const client = connect();
+  const client = new Client();
+  // const client = connect();
 
-  const {email, password} = req.body;
+  client.connect(err => {
+    if (err) {
+      console.log('Error connecting to database.');
+    } else {
+      console.log('Connected.');
+    }
+  });
+
+  const {email, password, admin} = req.body;
 
   const errors = validationResult(req);
 
@@ -20,33 +30,25 @@ const register = async (req, res) => {
   }
 
   const query = `
-  insert into users(email,password) values($1, $2)
-  returning *
+  insert into users(email,password,admin,favorites) values($1, $2, $3, $4) returning *
   `;
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const values = [email, hashedPassword];
+  const values = [email, hashedPassword, admin, []];
 
-  client.query(query, values)
-    .then(resp => {
-      client.end();
+  client.query(query, values, (err, resp) => {
+    if (err) {
+      console.log(err);
+    } else {
       return res.status(200).json({
         ok: true,
         msg: 'User created',
         user: resp.rows[0],
       });
-    })
-    .catch(err => {
-      client.end();
-      return res.status(500).json({
-        ok: false,
-        msg: 'Error when registering user.',
-        err,
-      });
-    });
-  client.end();
+    }
+  });
 };
 
 const login = async (req, res) => {
@@ -100,7 +102,6 @@ const login = async (req, res) => {
         msg: 'Database error',
       });
     });
-  client.end();
 };
 
 module.exports = {
