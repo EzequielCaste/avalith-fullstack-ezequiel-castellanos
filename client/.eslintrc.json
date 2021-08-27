@@ -5,8 +5,8 @@
         "node": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "google"
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {

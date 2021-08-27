@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { React, createContext, useState } from "react";
 
 export const AppContext = createContext(null);
 
@@ -9,6 +9,36 @@ export function AppProvider(props) {
   }); 
 
   const actions = {
+    addToFavorites: async (movieId, userId) => {
+      // user id and movie id
+      setState( prev => ({
+        ...prev,
+        isLoading: true,
+      }));
+      await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/favorites`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          "x-access-token": state.token,
+        },
+        body: JSON.stringify({movieId, userId})
+      }).then( resp => resp.json())
+        .then( data => {
+          if (data.ok) {
+            console.log(data);
+            setState( prev => ({
+              ...prev,
+              isLoading: false,              
+            }))
+          } else {
+            console.log('error');
+            setState( prev => ({
+              ...prev,
+              isLoading: false,              
+            }))
+          }
+        } )
+    },
     getMovies: async () => {
       setState( prev => ({
         ...prev,
@@ -20,19 +50,19 @@ export function AppProvider(props) {
           'content-type': 'application/json',
         },
       })
-      .then( resp => resp.json())
-      .then( data => {
-        if (data.ok) {
-          setState( prev => ({
-            ...prev,
-            isLoading: false,
-            movies: data.movies,
-          }));
-        } else {
-          console.log(data.err);
-        }
-      })
-      .catch( err => console.log('Error conecting to database.'))
+        .then( resp => resp.json())
+        .then( data => {
+          if (data.ok) {
+            setState( prev => ({
+              ...prev,
+              isLoading: false,
+              movies: data.movies,
+            }));
+          } else {
+            console.log(data.err);
+          }
+        })
+        .catch( err => console.log('Error conecting to database.'))
     },
     handleLogin: async (email, password) => {     
       setState( prev => ({
@@ -46,26 +76,26 @@ export function AppProvider(props) {
         },
         body: JSON.stringify({email, password}),
       })
-      .then( resp => resp.json())
-      .then(data => {
-        if (data.ok) {
-          console.log(data);
-          setState(prev => ({
-            ...prev,
-            isLoading: false,
-            token: data.token,
-            isLoggedIn: true,
-          }));             
-        } else {          
-          setState(prev => ({
-            ...prev,
-            isLoading: false,
-            errorMsg: data.errors,
-            authMessage: data.msg,
-          }));          
-        }
-      })
-      .catch( err => console.log('Error conecting to database.', err));
+        .then( resp => resp.json())
+        .then(data => {
+          if (data.ok) {
+            console.log(data);
+            setState(prev => ({
+              ...prev,
+              isLoading: false,
+              token: data.token,
+              isLoggedIn: true,
+            }));             
+          } else {          
+            setState(prev => ({
+              ...prev,
+              isLoading: false,
+              errorMsg: data.errors,
+              authMessage: data.msg,
+            }));          
+          }
+        })
+        .catch( err => console.log('Error conecting to database.', err));
     },
     handleLogout: async () => {
       setState( prev => ({

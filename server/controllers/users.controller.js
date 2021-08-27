@@ -65,7 +65,7 @@ const login = async (req, res) => {
   const {email, password} = req.body;
 
   const query = `
-  select email, password from users
+  select email, id, password from users
   where email = $1
   `;
 
@@ -81,6 +81,7 @@ const login = async (req, res) => {
           // user password ok send token
           const payload = {
             email,
+            user_id: resp.rows[0].id,
           };
           const token = jwt.sign(payload, process.env.JWT_SECRET);
           return res.status(200).json({

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import { AppContext } from "./context/appContext";
+import jwt from 'jsonwebtoken';
 
 
 function MovieApp() {
@@ -11,20 +12,23 @@ function MovieApp() {
     actions.getMovies();    
   }, []); 
  
-
+  const handleClick = (e) => {
+    const {user_id} = jwt.decode(state.token);
+    actions.addToFavorites(e.target.id, user_id);    
+  }
   return (
     <>
       <Navbar />
       <div>      
         {
           isLoading 
-          ? <h1>Loading...</h1>
-          : (
+            ? <h1>Loading...</h1>
+            : (
               movies && movies.map( movie => (
                 <p key={movie.title}>
                   {movie.title}
                   {
-                    isLoggedIn && <button>Add to Favorites</button>
+                    isLoggedIn && <button id={movie.id} onClick={handleClick}>Add to Favorites</button>
                   }
                 </p>
               ))

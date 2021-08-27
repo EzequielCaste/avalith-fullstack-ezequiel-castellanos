@@ -12,8 +12,8 @@ const Navbar = () => {
       <div>Movie Rental</div>
       {
         isLoggedIn 
-        ? <button onClick={actions.handleLogout} >Logout</button> 
-        : <Link to="/auth">Login</Link>
+          ? <button onClick={actions.handleLogout} >Logout</button> 
+          : <Link to="/auth">Login</Link>
       }
       
     </div>
