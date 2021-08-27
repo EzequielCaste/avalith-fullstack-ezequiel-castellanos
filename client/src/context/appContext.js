@@ -14,6 +14,7 @@ export function AppProvider(props) {
       setState( prev => ({
         ...prev,
         isLoading: true,
+        errorMsg: '',
       }));
       await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/favorites`, {
         method: 'POST',
@@ -31,10 +32,11 @@ export function AppProvider(props) {
               isLoading: false,              
             }))
           } else {
-            console.log('error');
+            console.log('error', data);
             setState( prev => ({
               ...prev,
-              isLoading: false,              
+              isLoading: false,     
+              errorMsg: data.err.detail,         
             }))
           }
         } )

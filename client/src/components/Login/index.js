@@ -7,7 +7,7 @@ const Login = () => {
   const {state, actions} = useContext(AppContext);
  
   const [formValues, handleInputChange, reset] = useForm({
-    email: '',
+    email: 'eze@gmail.com',
     password: '',
   });
   
@@ -33,8 +33,8 @@ const Login = () => {
           <div>
             <label>email: </label>
             <input
-              required
-              autoComplete="off"
+              required              
+              autoComplete="on"
               name="email"
               type="text"
               value={email}
@@ -63,7 +63,7 @@ const Login = () => {
         state.errorMsg &&         
           <div>
             Error:
-            { state.errorMsg.map(err => <p key={err.param}>{err.msg}</p> )}
+            { state.errorMsg.map(err => <p key={err.msg}>{err.msg}</p> )}
           </div>             
       }
       {

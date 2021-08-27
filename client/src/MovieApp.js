@@ -35,6 +35,13 @@ function MovieApp() {
             )
         }      
       </div>
+      {
+        state.errorMsg &&         
+          <div>
+            Error:
+            { <p>{state.errorMsg}</p> }
+          </div>             
+      }
     </>
   );
 }
