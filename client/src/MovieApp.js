@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import { AppContext } from "./context/appContext";
-import jwt from 'jsonwebtoken';
-
 
 function MovieApp() {
   const {state, actions} = useContext(AppContext);
@@ -11,10 +9,9 @@ function MovieApp() {
   useEffect(() => {
     actions.getMovies();    
   }, []); 
- 
-  const handleClick = (e) => {
-    const {user_id} = jwt.decode(state.token);
-    actions.addToFavorites(e.target.id, user_id);    
+  
+  const handleClick = (e) => {   
+    actions.addToFavorites(e.target.id, state.token);    
   }
   return (
     <>

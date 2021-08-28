@@ -12,7 +12,12 @@ const Navbar = () => {
       <div>Movie Rental</div>
       {
         isLoggedIn 
-          ? <button onClick={actions.handleLogout} >Logout</button> 
+          ? ( 
+            <div>
+              <button onClick={actions.handleLogout} >Logout</button>
+              <Link to="/favorites">View Favorites</Link>
+            </div>
+          )
           : <Link to="/auth">Login</Link>
       }
       

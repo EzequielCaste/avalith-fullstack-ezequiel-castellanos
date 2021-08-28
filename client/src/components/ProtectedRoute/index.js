@@ -5,7 +5,7 @@ import { AppContext } from '../../context/appContext';
 const ProtectedRoute = (props) => {
   const Component = props.component;
   const {state} = useContext(AppContext);
-
+  
   if (state.isLoggedIn) {
     return <Component />;
   } else {

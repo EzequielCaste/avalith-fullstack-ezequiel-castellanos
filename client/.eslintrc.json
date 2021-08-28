@@ -27,6 +27,7 @@
             "error",
             2
         ],
-        "max-len": "off"
+        "max-len": "off",
+        "react/prop-types": "off"
     }
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom"
+import Favorites from '../components/Favorites';
 import Login from "../components/Login"
 import MovieApp from "../MovieApp";
-
 
 const AppRouter = () => {
   return (
@@ -12,7 +12,8 @@ const AppRouter = () => {
           <Redirect to="/home" />
         </Route>
         <Route path="/home" component={MovieApp} />
-        <Route path="/auth" component={Login} />              
+        <Route path="/auth" component={Login} />           
+        <Route path="/favorites" component={Favorites} />   
       </Switch>
     </Router>
   )
