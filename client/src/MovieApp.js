@@ -5,14 +5,23 @@ import { AppContext } from "./context/appContext";
 
 function MovieApp() {
   const {state, actions} = useContext(AppContext);
+  
   const {movies, isLoading, isLoggedIn, admin} = state;
 
   useEffect(() => {
+    actions.clearErrorMsg();
     actions.getMovies();    
+    // check local storage for token
+    const token = window.localStorage.getItem('token')
+    if (token) {      
+      actions.handleToken(token)
+    } else {
+      console.log('not ok');
+    }
   }, []); 
   
   const handleClick = (e) => {   
-    actions.addToFavorites(e.target.id, state.token);    
+    actions.addToFavorites(e.target.id);    
   }
   return (
     <>
@@ -42,6 +51,15 @@ function MovieApp() {
             Error:
             { <p>{state.errorMsg}</p> }
           </div>             
+      }
+      {
+        state.message &&
+        <div>
+          Message: 
+          {
+            <p>{state.message}</p>
+          }
+        </div>
       }
     </>
   );

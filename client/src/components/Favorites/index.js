@@ -1,14 +1,22 @@
 import React, { useContext, useEffect } from 'react'
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/appContext'
 
 const Favorites = () => {
   const {state, actions} = useContext(AppContext);
+
   const {favorites, isLoggedIn} = state;
 
-  // fetch favorites of user that is logged in
-  useEffect( () => {
+  useEffect( () => {    
+    const token = window.localStorage.getItem('token');
+
+    if (token) {
+      console.log('yes token');
+      actions.handleToken(token);     
+    } else {
+      console.log('no token');
+    }
+
     actions.getFavorites();
   }, [])
 
@@ -28,7 +36,7 @@ const Favorites = () => {
       </div>
     )  
   } else {
-    return <Redirect to="/auth" />
+    return null;
   }
   
 }

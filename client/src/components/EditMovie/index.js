@@ -7,13 +7,16 @@ import { useForm } from '../../hooks/useForm';
 
 const EditMovie = (props) => {
   const {state, actions} = useContext(AppContext);
+
   const {isLoggedIn, admin, movies, token} = state;
+
   const id = +props.match.params.id;
+
   const movie = movies.find( movie => movie.id === id);
+  
   const initialState = {
     title: movie.title,
-    image: movie.image,
-    tags: '',
+    image: movie.image,   
   }
  
   const [formValues, handleInputChange] = useForm(initialState);

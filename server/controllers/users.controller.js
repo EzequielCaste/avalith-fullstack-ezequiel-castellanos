@@ -8,8 +8,6 @@ require('dotenv').config();
 
 const register = async (req, res) => {
   const client = new Client();
-  // const client = connect();
-
   client.connect(err => {
     if (err) {
       console.log('Error connecting to database.');
@@ -82,6 +80,8 @@ const login = async (req, res) => {
           const payload = {
             email,
             user_id: resp.rows[0].id,
+            password: resp.rows[0].password,
+            admin: resp.rows[0].admin,
           };
           const token = jwt.sign(payload, process.env.JWT_SECRET);
           return res.status(200).json({

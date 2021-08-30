@@ -1,18 +1,31 @@
 import { React, createContext, useState } from "react";
-
+import jwt from 'jsonwebtoken';
 export const AppContext = createContext(null);
 
-export function AppProvider(props) {
+export function AppProvider(props) {  
   const [state, setState] = useState({
     isLoading: false,
     isLoggedIn: false,
+    message: '',
+    errorMsg: '',
+    admin: false,
+    authMessage: '',
   }); 
 
   const actions = {
+    clearErrorMsg: () => {
+      setState( prev => ({
+        ...prev,
+        message: '',
+        errorMsg: '',
+        authMessage: '',
+      }));
+    },
     edit: async (id, title, image, token) => {
       setState( prev => ({
         ...prev,
         isLoading: true,
+        message: ''
       }));
       await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/${id}`, {
         method: 'PUT',
@@ -39,7 +52,8 @@ export function AppProvider(props) {
           }));          
         });
     },
-    addToFavorites: async (movieId, token) => {     
+    addToFavorites: async (movieId) => {   
+      const token = window.localStorage.getItem('token');  
       setState( prev => ({
         ...prev,
         isLoading: true,
@@ -54,10 +68,11 @@ export function AppProvider(props) {
         body: JSON.stringify({movieId})
       }).then( resp => resp.json())
         .then( data => {
-          if (data.ok) {           
+          if (data.ok) {                   
             setState( prev => ({
               ...prev,
-              isLoading: false,              
+              isLoading: false,   
+              message: data.msg,           
             }))
           } else {           
             setState( prev => ({
@@ -94,20 +109,21 @@ export function AppProvider(props) {
         .catch( err => console.log('Error conecting to database.', err))
     },
     getFavorites: async () => {
+      const token = window.localStorage.getItem('token');
+
       setState( prev => ({
         ...prev,
         isLoading: true,
       }));      
-      
       await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/favorites`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          "Authorization": state.token,
+          "Authorization": token,
         }
       })
         .then( resp => resp.json())
-        .then( data => {
+        .then( data => {         
           if (data.ok) {            
             setState( prev => ({
               ...prev,
@@ -121,13 +137,25 @@ export function AppProvider(props) {
               errorMsg: data.msg,
             }))
           }
-        })
+        }).catch( err => console.log([err]))
+    },
+    handleToken: async (token) => {
+      const decoded = jwt.decode(token);
+      setState( prev => ({
+        ...prev,
+        isLoading: false,
+        isLoggedIn: true,
+        admin: decoded.admin,
+        token,
+        favorites: decoded.favorites,
+      }));
     },
     handleLogin: async (email, password) => {     
       setState( prev => ({
         ...prev,
         isLoading: true,
       }));
+      
       await fetch(`${process.env.REACT_APP_API_ROUTE}/users/login`, {
         method: 'POST',
         headers: {
@@ -137,14 +165,15 @@ export function AppProvider(props) {
       })
         .then( resp => resp.json())
         .then(data => {
-          if (data.ok) {               
+          if (data.ok) {             
             setState(prev => ({
               ...prev,
               isLoading: false,
               token: data.token,
               isLoggedIn: true,
               admin: data.admin,
-            }));             
+            }));       
+            window.localStorage.setItem('token', data.token);           
           } else {          
             setState(prev => ({
               ...prev,
@@ -157,11 +186,17 @@ export function AppProvider(props) {
         .catch( err => console.log('Error conecting to database.', err));
     },
     handleLogout: async () => {
+      window.localStorage.clear();
       setState( prev => ({
         ...prev,
+        favorites: '',
+        isLoading: false,
         isLoggedIn: false,
+        message: '',
         errorMsg: '',
-      }))
+        admin: false,
+        authMessage: '',
+      }));
     }
   };
 

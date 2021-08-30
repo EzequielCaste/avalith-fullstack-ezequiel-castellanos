@@ -34,14 +34,12 @@ const addToFavorites = async (req, res) => {
 
   client.query(query, [userId, movieId])
     .then(resp => {
-      console.log(resp);
       return res.status(200).json({
         ok: true,
         msg: 'Movie added to favorites',
       });
     })
     .catch(err => {
-      console.log(err);
       return res.status(400).json({
         ok: false,
         err,
@@ -50,7 +48,7 @@ const addToFavorites = async (req, res) => {
 };
 
 const showFavorites = async (req, res) => {
-  const token = jwt.verify(req.headers['authorization'], process.env.JWT_SECRET);
+  const {user_id: userId} = req.user;
 
   const client = connect();
 
@@ -61,8 +59,9 @@ const showFavorites = async (req, res) => {
   where favorites.user_id = $1
   `;
 
-  client.query(query, [token.user_id])
+  client.query(query, [userId])
     .then( resp => {
+      // console.log(resp);
       return res.status(200).json({
         ok: true,
         favorites: resp.rows,

@@ -1,30 +1,26 @@
 import React, { useContext } from 'react'
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../context/appContext'
 import { useForm } from '../../hooks/useForm';
 
 const Login = () => {
-  const {state, actions} = useContext(AppContext);
- 
+  const {state, actions} = useContext(AppContext);  
   const [formValues, handleInputChange, reset] = useForm({
     email: 'eze@gmail.com',
     password: '',
   });
   
+  const history = useHistory();
+
   const {email, password} = formValues;
   
   const handleSubmit = (e) => {
     e.preventDefault();
     actions.handleLogin(email, password);
     reset();    
+    history.push('/home')
   };
-
-  if (state.isLoggedIn) {    
-    return ( 
-      <Redirect to="/home" />      
-    );
-  }
-
+  
   return (
     <div className="Form-container">
       <div className="Form-inner">
@@ -55,7 +51,7 @@ const Login = () => {
           <button disabled={state.isLoading}>
             {state.isLoading ? 'Loading...' : 'Sign In'}
           </button>
-         
+          
         </form>
       </div>
       {
@@ -73,6 +69,7 @@ const Login = () => {
       }
     </div>
   )
+  
 }
 
 export default Login;
