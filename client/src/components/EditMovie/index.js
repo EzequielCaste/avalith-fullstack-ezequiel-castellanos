@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { AppContext } from '../../context/appContext'
 import { useForm } from '../../hooks/useForm';
 
 const EditMovie = (props) => {
-  const {state} = useContext(AppContext);
-  const {isLoggedIn, admin, movies} = state;
+  const {state, actions} = useContext(AppContext);
+  const {isLoggedIn, admin, movies, token} = state;
   const id = +props.match.params.id;
   const movie = movies.find( movie => movie.id === id);
   const initialState = {
@@ -15,12 +16,13 @@ const EditMovie = (props) => {
     tags: '',
   }
  
-  const [formValues, handleInputChange, reset] = useForm(initialState);
+  const [formValues, handleInputChange] = useForm(initialState);
 
-  const {title, image, tags} = formValues;
+  const {title, image} = formValues;
 
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    actions.edit(id, title, image, token);
   }
   
   if (isLoggedIn && admin) {
@@ -54,7 +56,13 @@ const EditMovie = (props) => {
             {state.isLoading ? 'Loading...' : 'Edit'}
           </button>
 
-          {/* <Link to="/register">Register</Link> */}
+          {
+            state.message && 
+            <div>
+              {state.message}
+            </div>
+          }
+          <Link to="/home">Back</Link>
         </form>
       </div>
     )

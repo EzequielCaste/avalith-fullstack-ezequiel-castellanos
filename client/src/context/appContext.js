@@ -9,15 +9,42 @@ export function AppProvider(props) {
   }); 
 
   const actions = {
-    addToFavorites: async (movieId, token) => {
-      // user id and movie id
+    edit: async (id, title, image, token) => {
+      setState( prev => ({
+        ...prev,
+        isLoading: true,
+      }));
+      await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/${id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type':  'application/json',
+          'authorization': token,
+        },
+        body: JSON.stringify({title, image, id})
+      }).then( resp => resp.json())
+        .then( data => {
+          if (data.ok) {            
+            setState( prev => ({
+              ...prev,
+              isLoading: false,    
+              message: 'Movie was edited'          
+            }));
+          }
+        })
+        .catch( err => {
+          setState( prev => ({
+            ...prev,
+            isLoading: false,
+            message: err
+          }));          
+        });
+    },
+    addToFavorites: async (movieId, token) => {     
       setState( prev => ({
         ...prev,
         isLoading: true,
         errorMsg: '',
-      }));
-
-      
+      }));      
       await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/favorites`, {
         method: 'POST',
         headers: {
@@ -81,15 +108,13 @@ export function AppProvider(props) {
       })
         .then( resp => resp.json())
         .then( data => {
-          if (data.ok) {
-            console.log(data);
+          if (data.ok) {            
             setState( prev => ({
               ...prev,
               favorites: data.favorites,
               isLoading: false,
             }))
-          } else {
-            console.log('error');
+          } else {            
             setState( prev => ({
               ...prev,
               isLoading: false,
