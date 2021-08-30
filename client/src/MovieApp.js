@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { AppContext } from "./context/appContext";
 
 function MovieApp() {
   const {state, actions} = useContext(AppContext);
-  const {movies, isLoading, isLoggedIn} = state;
+  const {movies, isLoading, isLoggedIn, admin} = state;
 
   useEffect(() => {
     actions.getMovies();    
@@ -26,6 +27,9 @@ function MovieApp() {
                   {movie.title}
                   {
                     isLoggedIn && <button id={movie.id} onClick={handleClick}>Add to Favorites</button>
+                  }
+                  {
+                    isLoggedIn && admin && <Link to={`/edit-movie/${movie.id}`}>Edit Movie</Link>
                   }
                 </p>
               ))

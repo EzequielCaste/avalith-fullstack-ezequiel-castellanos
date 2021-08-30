@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/appContext'
 
 const Favorites = () => {
@@ -23,6 +24,7 @@ const Favorites = () => {
             </div>
           ))
         }
+        <Link to="/home">Back</Link>
       </div>
     )  
   } else {

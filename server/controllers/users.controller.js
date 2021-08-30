@@ -65,7 +65,7 @@ const login = async (req, res) => {
   const {email, password} = req.body;
 
   const query = `
-  select email, id, password from users
+  select email, id, password, admin from users
   where email = $1
   `;
 
@@ -88,6 +88,7 @@ const login = async (req, res) => {
             ok: true,
             msg: 'Login sucessful',
             token,
+            admin: resp.rows[0].admin,
           });
         } else {
           return res.status(400).json({

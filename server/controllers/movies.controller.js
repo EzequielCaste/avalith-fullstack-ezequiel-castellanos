@@ -27,17 +27,20 @@ const addToFavorites = async (req, res) => {
 
   const client = connect();
   const query = `
-  insert into favorites (user_id, movie_id) values($1, $2)
+  insert into favorites(user_id, movie_id) 
+  values($1, $2)  
   `;
 
   client.query(query, [userId, movieId])
     .then(resp => {
+      console.log(resp);
       return res.status(200).json({
         ok: true,
         msg: 'Movie added to favorites',
       });
     })
     .catch(err => {
+      console.log(err);
       return res.status(400).json({
         ok: false,
         err,
@@ -60,7 +63,7 @@ const showFavorites = async (req, res) => {
 
     client.query(query, [token.user_id])
       .then( resp => {
-        console.log(resp);
+        // console.log(resp);
         return res.status(200).json({
           ok: true,
           favorites: resp.rows,

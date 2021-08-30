@@ -112,12 +112,13 @@ export function AppProvider(props) {
       })
         .then( resp => resp.json())
         .then(data => {
-          if (data.ok) {            
+          if (data.ok) {               
             setState(prev => ({
               ...prev,
               isLoading: false,
               token: data.token,
               isLoggedIn: true,
+              admin: data.admin,
             }));             
           } else {          
             setState(prev => ({
