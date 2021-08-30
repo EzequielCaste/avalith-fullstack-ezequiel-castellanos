@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../context/appContext'
+import { AppContext } from '../../context/appContext';
+import './index.css';
 
 const Favorites = () => {
   const {state, actions} = useContext(AppContext);
@@ -10,15 +11,18 @@ const Favorites = () => {
   useEffect( () => {    
     const token = window.localStorage.getItem('token');
 
-    if (token) {
-      console.log('yes token');
+    if (token) {      
       actions.handleToken(token);     
-    } else {
-      console.log('no token');
-    }
+    } 
 
     actions.getFavorites();
-  }, [])
+  }, []);
+
+  const handleClick = (e) => {
+    console.log(e.target.id);
+    actions.removeFavorite(e.target.id);
+    actions.getFavorites();
+  }
 
   if (isLoggedIn) {
     return (
@@ -27,8 +31,11 @@ const Favorites = () => {
         {
           favorites && 
           favorites.map( movie => (
-            <div key={movie.title}>
-              {movie.title}
+            <div key={movie.title} className="movie-card">
+              <div >
+                {movie.title}
+              </div>
+              <button id={movie.id} onClick={handleClick}>X</button>
             </div>
           ))
         }

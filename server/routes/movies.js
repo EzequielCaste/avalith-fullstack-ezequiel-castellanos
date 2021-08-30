@@ -7,6 +7,9 @@ router.get('/', movieController.listMovies);
 router.post('/favorites',
   verify,
   movieController.addToFavorites);
+router.delete('/favorites',
+  verify,
+  movieController.removeFavorite);
 router.get('/favorites',
   verify,
   movieController.showFavorites);

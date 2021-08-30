@@ -12,12 +12,10 @@ function MovieApp() {
     actions.clearErrorMsg();
     actions.getMovies();    
     // check local storage for token
-    const token = window.localStorage.getItem('token')
+    const token = window.localStorage.getItem('token');
     if (token) {      
-      actions.handleToken(token)
-    } else {
-      console.log('not ok');
-    }
+      actions.handleToken(token);
+    }    
   }, []); 
   
   const handleClick = (e) => {   
@@ -49,7 +47,7 @@ function MovieApp() {
         state.errorMsg &&         
           <div>
             Error:
-            { <p>{state.errorMsg}</p> }
+            { state.errorMsg.map(err => <p key={err.msg}>{err.msg}</p> )}
           </div>             
       }
       {

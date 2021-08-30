@@ -47,6 +47,34 @@ const addToFavorites = async (req, res) => {
     });
 };
 
+const removeFavorite = async (req, res) => {
+  const {movieId} = req.body;
+
+  const {user_id: userId} = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+
+  const client = connect();
+
+  const query = `
+  delete from favorites
+  where movie_id = $1 and
+  user_id = $2
+  `;
+
+  client.query(query, [movieId, userId])
+    .then(resp => {
+      return res.status(200).json({
+        ok: true,
+        msg: 'Movie removed from favorites',
+      });
+    })
+    .catch(err => {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    });
+};
+
 const showFavorites = async (req, res) => {
   const {user_id: userId} = req.user;
 
@@ -109,6 +137,7 @@ const editMovie = async (req, res) => {
 module.exports = {
   listMovies,
   addToFavorites,
+  removeFavorite,
   showFavorites,
   editMovie,
 };

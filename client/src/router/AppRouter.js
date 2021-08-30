@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom"
+import AddMovie from '../components/AddMovie';
 import EditMovie from '../components/EditMovie';
 import Favorites from '../components/Favorites';
 import Login from "../components/Login"
@@ -16,6 +17,7 @@ const AppRouter = () => {
         <Route path="/auth" component={Login} />           
         <Route path="/favorites" component={Favorites} />   
         <Route path="/edit-movie/:id" component={EditMovie} />
+        <Route path="/add-movie" component={AddMovie} />
       </Switch>
     </Router>
   )

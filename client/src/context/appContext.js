@@ -53,6 +53,7 @@ export function AppProvider(props) {
         });
     },
     addToFavorites: async (movieId) => {   
+      console.log('add fav');
       const token = window.localStorage.getItem('token');  
       setState( prev => ({
         ...prev,
@@ -81,7 +82,39 @@ export function AppProvider(props) {
               errorMsg: data.err.detail,         
             }))
           }
-        } )
+        })
+    },
+    removeFavorite: async (movieId) => {
+      console.log('remove fav');
+      const token = window.localStorage.getItem('token');  
+      setState( prev => ({
+        ...prev,
+        isLoading: true,
+        errorMsg: '',
+      }));      
+      await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/favorites`, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+          "Authorization": token,
+        },
+        body: JSON.stringify({movieId})
+      }).then( resp => resp.json())
+        .then( data => {
+          if (data.ok) {                   
+            setState( prev => ({
+              ...prev,
+              isLoading: false,   
+              message: data.msg,           
+            }))
+          } else {           
+            setState( prev => ({
+              ...prev,
+              isLoading: false,     
+              errorMsg: data.err.detail,         
+            }))
+          }
+        })
     },
     getMovies: async () => {
       setState( prev => ({
@@ -108,7 +141,11 @@ export function AppProvider(props) {
         })
         .catch( err => console.log('Error conecting to database.', err))
     },
+    addMovie: async () => {
+      
+    },
     getFavorites: async () => {
+      console.log('getFavs');
       const token = window.localStorage.getItem('token');
 
       setState( prev => ({
@@ -164,7 +201,7 @@ export function AppProvider(props) {
         body: JSON.stringify({email, password}),
       })
         .then( resp => resp.json())
-        .then(data => {
+        .then( data => {              
           if (data.ok) {             
             setState(prev => ({
               ...prev,
@@ -174,16 +211,21 @@ export function AppProvider(props) {
               admin: data.admin,
             }));       
             window.localStorage.setItem('token', data.token);           
-          } else {          
+          } else {            
             setState(prev => ({
               ...prev,
-              isLoading: false,
-              errorMsg: data.errors,
-              authMessage: data.msg,
+              isLoading: false,     
+              errorMsg: data.errors,        
             }));          
           }
         })
-        .catch( err => console.log('Error conecting to database.', err));
+        .catch( err => {             
+          setState( prev => ({
+            ...prev,
+            isLoading: false,
+            errorMsg: err,
+          }));        
+        });
     },
     handleLogout: async () => {
       window.localStorage.clear();
