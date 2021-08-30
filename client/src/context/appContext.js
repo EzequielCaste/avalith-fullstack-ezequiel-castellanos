@@ -141,8 +141,44 @@ export function AppProvider(props) {
         })
         .catch( err => console.log('Error conecting to database.', err))
     },
-    addMovie: async () => {
-      
+    addMovie: async (title, image) => {
+      const token = window.localStorage.getItem('token');
+
+      setState( prev => ({
+        ...prev,
+        isLoading: true,
+      }));
+      await fetch(`${process.env.REACT_APP_API_ROUTE}/movies/new`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': token,
+        },
+        body: JSON.stringify({title, image})
+      })
+        .then(resp => resp.json())
+        .then(data => {          
+          if (data.ok) {
+            setState( prev => ({
+              ...prev,
+              isLoading: false,
+              message: data.msg,  
+            }))
+          } else {
+            setState( prev => ({
+              ...prev,
+              isLoading: false,
+              message: data.err.detail,
+            }))
+          }
+        })
+        .catch( err => {          
+          setState( prev => ({
+            ...prev,
+            isLoading: false,
+            errorMsg: err
+          }))
+        });
     },
     getFavorites: async () => {
       console.log('getFavs');

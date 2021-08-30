@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/appContext';
 import {useForm} from '../../hooks/useForm';
@@ -7,6 +7,15 @@ const AddMovie = () => {
   const {state, actions} = useContext(AppContext);
   
   const {isLoading, isLoggedIn, admin} = state;
+
+  useEffect( () => {    
+    const token = window.localStorage.getItem('token');
+
+    if (token) {      
+      actions.handleToken(token);     
+    } 
+    
+  }, []);
 
   const initialState = {
     title: '',
@@ -19,6 +28,8 @@ const AddMovie = () => {
     e.preventDefault();
     actions.addMovie(title,image);
   }
+
+
 
   if (isLoggedIn && admin) {
     return (
@@ -48,7 +59,7 @@ const AddMovie = () => {
             />
           </div>
           <button disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Edit'}
+            {isLoading ? 'Loading...' : 'Add'}
           </button>
   
           {
@@ -58,7 +69,7 @@ const AddMovie = () => {
             </div>
           }
           <Link to="/home">Back</Link>
-        </form>
+        </form>       
       </div>
     )
   } else {

@@ -134,10 +134,36 @@ const editMovie = async (req, res) => {
     });
 };
 
+const addMovie = async (req, res) => {
+  const {title, image} = req.body;
+
+  const client = connect();
+
+  const query = `
+  insert into movies(title, image) 
+  values($1, $2)  
+  `;
+
+  client.query(query, [title, image])
+    .then(resp => {
+      return res.status(200).json({
+        ok: true,
+        msg: 'Movie added to database',
+      });
+    })
+    .catch(err => {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
   listMovies,
   addToFavorites,
   removeFavorite,
   showFavorites,
   editMovie,
+  addMovie,
 };

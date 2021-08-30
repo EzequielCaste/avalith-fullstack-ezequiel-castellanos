@@ -5,7 +5,7 @@ import { AppContext } from '../../context/appContext'
 const Navbar = () => {
   const {state, actions} = useContext(AppContext);
   
-  const {isLoggedIn, admin} = state;
+  const {isLoggedIn} = state;
  
 
   return (
@@ -21,22 +21,7 @@ const Navbar = () => {
             </div>
           )  
           :   <Link to="/auth">Login</Link>      
-      } 
-     
-
-
-      {/* {
-        isLoggedIn 
-          ? ( 
-            <div>
-              <button onClick={actions.handleLogout} >Logout</button>
-              <Link to="/favorites">View Favorites</Link>
-              (admin && <Link to="/add-movie">Add Movie</Link>)
-            </div>
-          )
-          : <Link to="/auth">Login</Link>
-      } */}
-      
+      }       
     </div>
   )
 }

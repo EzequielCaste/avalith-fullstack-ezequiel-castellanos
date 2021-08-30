@@ -16,5 +16,7 @@ router.get('/favorites',
 router.put('/:id',
   verify,
   movieController.editMovie);
-
+router.post('/new',
+  verify,
+  movieController.addMovie);
 module.exports = router;
