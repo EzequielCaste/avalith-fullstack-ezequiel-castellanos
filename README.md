@@ -29,13 +29,31 @@ usuario admin
 MovieApp.js
 ```
 
+### Variables de Entorno para Cliente
+```
+REACT_APP_API_ROUTE='http://localhost:3001'
+REACT_APP_JWT_SECRET='maradona1982376234%$#&'
+ESLINT_NO_DEV_ERRORS=true
+```
+
+
 ### Servidor (Node.js Express, Bcrypt, JSON Web Token y PostgreSQL)
 Se conecta a la base de datos: **avalith**
 ```
 /config (configuración de base de datos, creación de tablas y usuarios)
 /controllers (funciones controladoras)
 /routes (configuración de rutas)
+```
 
+### Variables de Entorno para Servidor
+```
+PORT=3001
+PGUSER='postgres'
+PGHOST='localhost'
+PGDATABASE='avalith'
+PGPASSWORD=''
+PGPORT='5432'
+JWT_SECRET='maradona1982376234%$#&'
 ```
 
 ### Instalación
