@@ -29,14 +29,12 @@ const AddMovie = () => {
     actions.addMovie(title,image);
   }
 
-
-
   if (isLoggedIn && admin) {
     return (
       <div>
-        <h1>Add Movie</h1>
+        <h2 className="title">Add Movie</h2>
         <form action="#" onSubmit={handleSubmit} className="">
-          <div>
+          <div className="form-control">
             <label>Title: </label>
             <input
               required              
@@ -47,7 +45,7 @@ const AddMovie = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className="form-control">
             <label>Image URL: </label>
             <input
               required

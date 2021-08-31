@@ -8,8 +8,7 @@ export function AppProvider(props) {
     isLoggedIn: false,
     message: '',
     errorMsg: '',
-    admin: false,
-    authMessage: '',
+    admin: false,   
   }); 
 
   const actions = {
@@ -17,8 +16,7 @@ export function AppProvider(props) {
       setState( prev => ({
         ...prev,
         message: '',
-        errorMsg: '',
-        authMessage: '',
+        errorMsg: '',        
       }));
     },
     edit: async (id, title, image, token) => {
@@ -52,8 +50,7 @@ export function AppProvider(props) {
           }));          
         });
     },
-    addToFavorites: async (movieId) => {   
-      console.log('add fav');
+    addToFavorites: async (movieId) => {        
       const token = window.localStorage.getItem('token');  
       setState( prev => ({
         ...prev,
@@ -75,17 +72,23 @@ export function AppProvider(props) {
               isLoading: false,   
               message: data.msg,           
             }))
-          } else {           
+          } else {                    
             setState( prev => ({
               ...prev,
               isLoading: false,     
-              errorMsg: data.err.detail,         
+              errorMsg: [data.err],         
             }))
           }
         })
+        .catch( err => {
+          setState( prev => ({
+            ...prev,
+            isLoading: false,
+            message: err
+          }));          
+        });
     },
-    removeFavorite: async (movieId) => {
-      console.log('remove fav');
+    removeFavorite: async (movieId) => {     
       const token = window.localStorage.getItem('token');  
       setState( prev => ({
         ...prev,
@@ -115,6 +118,13 @@ export function AppProvider(props) {
             }))
           }
         })
+        .catch( err => {
+          setState( prev => ({
+            ...prev,
+            isLoading: false,
+            message: err
+          }));          
+        });
     },
     getMovies: async () => {
       setState( prev => ({
@@ -136,10 +146,20 @@ export function AppProvider(props) {
               movies: data.movies,
             }));
           } else {
-            console.log(data.err);
+            setState( prev => ({
+              ...prev,
+              isLoading: false,
+              message: data.err,
+            }));            
           }
         })
-        .catch( err => console.log('Error conecting to database.', err))
+        .catch( err => {
+          setState( prev => ({
+            ...prev,
+            isLoading: false,           
+          }));
+          console.log('Error conecting to database.', err)
+        })
     },
     addMovie: async (title, image) => {
       const token = window.localStorage.getItem('token');
@@ -180,8 +200,7 @@ export function AppProvider(props) {
           }))
         });
     },
-    getFavorites: async () => {
-      console.log('getFavs');
+    getFavorites: async () => {     
       const token = window.localStorage.getItem('token');
 
       setState( prev => ({
@@ -210,7 +229,8 @@ export function AppProvider(props) {
               errorMsg: data.msg,
             }))
           }
-        }).catch( err => console.log([err]))
+        })
+        .catch( err => console.log([err]))
     },
     handleToken: async (token) => {
       const decoded = jwt.decode(token);
@@ -247,11 +267,12 @@ export function AppProvider(props) {
               admin: data.admin,
             }));       
             window.localStorage.setItem('token', data.token);           
-          } else {            
+          } else {             
             setState(prev => ({
               ...prev,
               isLoading: false,     
-              errorMsg: data.errors,        
+              errorMsg: data.errors,   
+              message: data.msg,     
             }));          
           }
         })
@@ -272,8 +293,7 @@ export function AppProvider(props) {
         isLoggedIn: false,
         message: '',
         errorMsg: '',
-        admin: false,
-        authMessage: '',
+        admin: false,       
       }));
     }
   };

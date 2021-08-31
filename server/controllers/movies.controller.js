@@ -81,7 +81,7 @@ const showFavorites = async (req, res) => {
   const client = connect();
 
   const query = `
-  select title, id from movies
+  select title, id, image from movies
   inner join favorites
   on movies.id = favorites.movie_id
   where favorites.user_id = $1
@@ -89,7 +89,6 @@ const showFavorites = async (req, res) => {
 
   client.query(query, [userId])
     .then( resp => {
-      // console.log(resp);
       return res.status(200).json({
         ok: true,
         favorites: resp.rows,

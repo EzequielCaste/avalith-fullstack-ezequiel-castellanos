@@ -6,7 +6,7 @@ import { AppContext } from "./context/appContext";
 function MovieApp() {
   const {state, actions} = useContext(AppContext);
   
-  const {movies, isLoading, isLoggedIn, admin} = state;
+  const {movies, isLoading, isLoggedIn, admin, errorMsg} = state;
 
   useEffect(() => {
     actions.clearErrorMsg();
@@ -24,30 +24,11 @@ function MovieApp() {
   return (
     <>
       <Navbar />
-      <div>      
-        {
-          isLoading 
-            ? <h1>Loading...</h1>
-            : (
-              movies && movies.map( movie => (
-                <p key={movie.title}>
-                  {movie.title}
-                  {
-                    isLoggedIn && <button id={movie.id} onClick={handleClick}>Add to Favorites</button>
-                  }
-                  {
-                    isLoggedIn && admin && <Link to={`/edit-movie/${movie.id}`}>Edit Movie</Link>
-                  }
-                </p>
-              ))
-            )
-        }      
-      </div>
       {
-        state.errorMsg &&         
+        errorMsg &&         
           <div>
             Error:
-            { state.errorMsg.map(err => <p key={err.msg}>{err.msg}</p> )}
+            { errorMsg.map(err => <p key={err.detail}>{err.detail}</p> )}
           </div>             
       }
       {
@@ -59,6 +40,26 @@ function MovieApp() {
           }
         </div>
       }
+      <div className="movie-container">      
+        {
+          isLoading 
+            ? <h1>Loading...</h1>
+            : (
+              movies && movies.map( movie => (
+                <div className="movie-card" key={movie.title}>
+                  <span className="movie-title">{movie.title}</span>
+                  <img src={movie.image} alt={movie.title} />
+                  {
+                    isLoggedIn && <button id={movie.id} onClick={handleClick}>Add to Favorites</button>
+                  }
+                  {
+                    isLoggedIn && admin && <Link to={`/edit-movie/${movie.id}`}>Edit Movie</Link>
+                  }
+                </div>
+              ))
+            )
+        }      
+      </div>     
     </>
   );
 }

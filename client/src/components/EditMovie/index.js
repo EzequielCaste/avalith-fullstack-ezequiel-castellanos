@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-
 import { AppContext } from '../../context/appContext'
 import { useForm } from '../../hooks/useForm';
 
@@ -31,9 +30,9 @@ const EditMovie = (props) => {
   if (isLoggedIn && admin) {
     return (
       <div>
-        <h1>Edit Movie</h1>
+        <h2 className="title">Edit Movie</h2>
         <form action="#" onSubmit={handleSubmit} className="">
-          <div>
+          <div className="form-control">
             <label>Title: </label>
             <input
               required              
@@ -44,7 +43,7 @@ const EditMovie = (props) => {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className="form-control">
             <label>Image URL: </label>
             <input
               required

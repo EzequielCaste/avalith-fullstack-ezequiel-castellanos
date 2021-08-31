@@ -18,24 +18,24 @@ const Favorites = () => {
     actions.getFavorites();
   }, []);
 
-  const handleClick = (e) => {
-    console.log(e.target.id);
+  const handleClick = (e) => {   
     actions.removeFavorite(e.target.id);
     actions.getFavorites();
   }
 
   if (isLoggedIn) {
     return (
-      <div>
-        <h1>Favorite Movies</h1>
+      <div className="Favorites">
+        <h2 className="title">Favorite Movies</h2>
         {
           favorites && 
           favorites.map( movie => (
             <div key={movie.title} className="movie-card">
-              <div >
+              <div>
                 {movie.title}
               </div>
-              <button id={movie.id} onClick={handleClick}>X</button>
+              <img src={movie.image} alt={movie.title} />
+              <button id={movie.id} onClick={handleClick}>Remove</button>
             </div>
           ))
         }

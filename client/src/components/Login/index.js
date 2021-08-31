@@ -28,7 +28,7 @@ const Login = () => {
     return (
       <div className="Form-container">
         <div className="Form-inner">
-          <h1>Login</h1>
+          <h2 className="title">Login</h2>
           <form action="#" onSubmit={handleSubmit} className="">
             <div>
               <label>email: </label>
@@ -66,9 +66,9 @@ const Login = () => {
             </div>             
         }
         {
-          state.authMessage &&
+          state.message &&
             <div>
-              {state.authMessage}
+              {state.message}
             </div>
         }
       </div>
