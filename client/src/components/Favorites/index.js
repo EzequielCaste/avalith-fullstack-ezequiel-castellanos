@@ -43,7 +43,12 @@ const Favorites = () => {
       </div>
     )  
   } else {
-    return null;
+    return (
+      <div>
+        <h2>Not logged in</h2>
+        <Link to="/auth">Login</Link>
+      </div>
+    )
   }
   
 }

@@ -18,6 +18,7 @@ const AppRouter = () => {
         <Route path="/favorites" component={Favorites} />   
         <Route path="/edit-movie/:id" component={EditMovie} />
         <Route path="/add-movie" component={AddMovie} />
+        <Redirect to="/home" />
       </Switch>
     </Router>
   )
