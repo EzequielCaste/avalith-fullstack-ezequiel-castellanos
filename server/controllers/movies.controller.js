@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const listMovies = async (req, res) => {
   const client = connect();
   const query = `
-  select id, title, image, tags from movies
+  select id, title, image from movies
   `;
   client.query(query)
     .then(resp => {

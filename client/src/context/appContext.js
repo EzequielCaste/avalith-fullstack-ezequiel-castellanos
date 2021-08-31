@@ -9,6 +9,10 @@ export function AppProvider(props) {
     message: '',
     errorMsg: '',
     admin: false,   
+    movie: {
+      title: '',
+      image: '',
+    }
   }); 
 
   const actions = {
@@ -156,11 +160,11 @@ export function AppProvider(props) {
         .catch( err => {
           setState( prev => ({
             ...prev,
-            isLoading: false,           
-          }));
-          console.log('Error conecting to database.', err)
+            isLoading: false,
+            errorMsg: err.code,           
+          }));          
         })
-    },
+    },    
     addMovie: async (title, image) => {
       const token = window.localStorage.getItem('token');
 
@@ -234,6 +238,7 @@ export function AppProvider(props) {
     },
     handleToken: async (token) => {
       const decoded = jwt.decode(token);
+      
       setState( prev => ({
         ...prev,
         isLoading: false,

@@ -1,8 +1,56 @@
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {Client} = require('pg');
 const {connect} = require('../config/db');
 require('dotenv').config();
+
+const register = async (req, res) => {
+  const client = new Client();
+
+  client.connect(err => {
+    if (err) {
+      console.log('Error connecting to database.');
+    } else {
+      console.log('Connected.');
+    }
+  });
+
+  const {email, password, admin} = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      ok: false,
+      errors: errors.array(),
+    });
+  }
+
+  const query = `
+  insert into users(email,password,admin) values($1, $2, $3) returning *
+  `;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const values = [email, hashedPassword, admin];
+
+  client.query(query, values, (err, resp) => {
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        err,
+      });
+    } else {
+      return res.status(200).json({
+        ok: true,
+        msg: 'User created',
+        user: resp.rows[0],
+      });
+    }
+  });
+};
 
 const login = async (req, res) => {
   const client = connect();
@@ -61,5 +109,6 @@ const login = async (req, res) => {
 };
 
 module.exports = {
+  register,
   login,
 };

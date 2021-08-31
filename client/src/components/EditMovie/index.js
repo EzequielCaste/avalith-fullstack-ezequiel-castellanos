@@ -1,17 +1,24 @@
-import React, { useContext } from 'react'
-import { Redirect } from 'react-router';
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/appContext'
 import { useForm } from '../../hooks/useForm';
 
 const EditMovie = (props) => {
   const {state, actions} = useContext(AppContext);
-
-  const {isLoggedIn, admin, movies, token} = state;
-
   const id = +props.match.params.id;
+  
+  const {isLoggedIn, admin, token, movies} = state;  
 
-  const movie = movies.find( movie => movie.id === id);
+  useEffect( () => {    
+    const token = window.localStorage.getItem('token');
+
+    if (token) {      
+      actions.handleToken(token);     
+    } 
+
+  }, []);  
+
+  const movie = movies ? movies.find( movie => movie.id === id) : [];
   
   const initialState = {
     title: movie.title,
@@ -69,7 +76,7 @@ const EditMovie = (props) => {
       </div>
     )
   } else {
-    return <Redirect to="/home" />
+    return null;
   }
 
 }

@@ -1,8 +1,8 @@
-.Navbar {
-  padding: 2rem 0;
-  text-align: center;
-  max-width: 25rem;
-  margin: 0 auto;
+.Navbar {  
+  width: 100%;
+  padding: 1rem;  
+  background-color: #fff; 
+
 }
 .navbar-container {
  font-size: 0.7rem;
@@ -28,4 +28,13 @@
 }
 .navbar-container a:hover {
   border-bottom: 1px solid #4A4453;
+}
+@media (min-width: 30rem) {
+  .Navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+  .navbar-container a {
+    margin-right: 1rem;
+  }
 }

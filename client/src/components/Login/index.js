@@ -9,8 +9,8 @@ const Login = () => {
   const {isLoggedIn} = state;
 
   const [formValues, handleInputChange, reset] = useForm({
-    email: 'eze@gmail.com',
-    password: '',
+    email: 'test@test.com',
+    password: '123',
   });  
  
   const {email, password} = formValues;
