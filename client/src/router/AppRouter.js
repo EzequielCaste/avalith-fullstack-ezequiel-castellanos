@@ -13,11 +13,11 @@ const AppRouter = () => {
         <Route path="/" exact>
           <Redirect to="/home" />
         </Route>
-        <Route path="/home" component={MovieApp} />
-        <Route path="/auth" component={Login} />           
-        <Route path="/favorites" component={Favorites} />   
+        <Route path="/home" exact component={MovieApp} />
+        <Route path="/auth" exact component={Login} />           
+        <Route path="/favorites" exact component={Favorites} />   
         <Route path="/edit-movie/:id" component={EditMovie} />
-        <Route path="/add-movie" component={AddMovie} />
+        <Route path="/add-movie" exact component={AddMovie} />
         <Redirect to="/home" />
       </Switch>
     </Router>

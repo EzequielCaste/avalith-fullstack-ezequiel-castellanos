@@ -234,7 +234,7 @@ export function AppProvider(props) {
             }))
           }
         })
-        .catch( err => console.log([err]))
+        .catch( err => console.log('Could not fetch favorites', err))
     },
     handleToken: async (token) => {
       const decoded = jwt.decode(token);
