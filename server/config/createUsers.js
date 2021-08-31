@@ -22,7 +22,7 @@ const createUsers = () => {
   let admin = false;
 
   // Create ADMIN user
-  request.post('http://localhost:3000/users/register', {
+  request.post('http://localhost:3001/users/register', {
     headers: {
       'content-type': 'application/json',
     },
@@ -39,7 +39,7 @@ const createUsers = () => {
   email = 'admin@test.com';
   admin = true;
 
-  request.post('http://localhost:3000/users/register', {
+  request.post('http://localhost:3001/users/register', {
     headers: {
       'content-type': 'application/json',
     },
