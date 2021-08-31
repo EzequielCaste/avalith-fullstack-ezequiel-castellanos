@@ -41,10 +41,12 @@ Se conecta a la base de datos: **avalith**
 ### Instalación
 ```
 git clone https://github.com/EzequielCaste/avalith-fullstack-ezequiel-castellanos.git
-cd avalith-fullstack-ezequiel-castellanos
-cd server
+cd avalith-fullstack-ezequiel-castellanos/server
 npm install
-cd..
-cd client
+node index.js
+
+abrir otra terminal en avalith-fullstack-ezequiel-castellanos/client
 npm install
+
+
 ```
