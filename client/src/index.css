@@ -44,16 +44,19 @@ a:hover {
 .movie-card button {
   background-color: gainsboro;
   border: 0;
-  padding: 0.2rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 0.2rem;
   width: fit-content;
-  margin: 0.5rem auto;
+  margin: 0.95rem auto;
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .movie-card a {
   font-size: 0.7rem;
+}
+.movie-title {
+  padding: 0.7rem 0;
 }
 .title {
   padding: 2rem 0;
