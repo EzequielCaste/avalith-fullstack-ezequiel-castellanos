@@ -2,7 +2,7 @@
 
 Deberá crear una API donde el usuario pueda loguearse utilizando su email y su password, y al ser exitoso deberá devolver un token que quedará persistido en el Frontend.
 
-Información para Login:
+### Información para Login:
 ```
 usuario test
 {
@@ -61,10 +61,26 @@ JWT_SECRET='maradona1982376234%$#&'
 git clone https://github.com/EzequielCaste/avalith-fullstack-ezequiel-castellanos.git
 cd avalith-fullstack-ezequiel-castellanos/server
 npm install
-node index.js
 
 abrir otra terminal en avalith-fullstack-ezequiel-castellanos/client
 npm install
-
-
 ```
+
+### Iniciar el Servidor
+```
+cd avalith-fullstack-ezequiel-castellanos/server
+node index.js
+```
+
+### Iniciar el Cliente
+```
+cd avalith-fullstack-ezequiel-castellanos/client
+npm start
+```
+
+### Abrir http://localhost:3000/
+
+![image](https://user-images.githubusercontent.com/51804994/131553715-a0590836-9aa6-4d72-aa31-0b537dc2d5d3.png)
+
+
+
