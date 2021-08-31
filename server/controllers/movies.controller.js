@@ -102,9 +102,6 @@ const showFavorites = async (req, res) => {
 };
 
 const editMovie = async (req, res) => {
-  console.log(req.headers);
-  console.log(req.body);
-
   const client = connect();
 
   const {title, image, id} = req.body;
@@ -118,14 +115,12 @@ const editMovie = async (req, res) => {
   const values = [title, image, id];
   client.query(query, values)
     .then( resp => {
-      console.log(resp);
       return res.status(200).json({
         ok: true,
         msg: 'Movie was edited',
       });
     })
     .catch( err => {
-      console.log(err);
       return res.status(400).json({
         ok: false,
         msg: 'Error while updating movie',
