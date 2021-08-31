@@ -3,7 +3,7 @@ require('dotenv').config();
 const {movies} = require('./movies.json');
 const {createUsers} = require('./createUsers');
 
-const createTables = async () => {
+const createTables = () => {
   const client = new Client();
 
   client.connect(err => {
@@ -35,7 +35,7 @@ const createTables = async () => {
     }
   });
 
-  await createUsers();
+  createUsers();
 
   // Create movies table
   query = `
